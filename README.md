@@ -12,7 +12,7 @@ Flask - myweatherapp
  Запуск проекта
 1. Клонируйте репозиторий (если нужно):
 git clone https://github.com/ShodruzXoshimzoda/myweatherapp.git
-cd flask-weather-app
+cd myweatherapp
 
 2.Создайте виртуальное окружение (рекомендуется):
 python -m venv venv
