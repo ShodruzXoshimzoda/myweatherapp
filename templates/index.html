@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прогноз Погоды</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Прогноз Погоды</h1>
+    <form method="post">
+        <input type="text" name="city" placeholder="Введите город" required>
+        <button type="submit">Показать</button>
+    </form>
+
+    {% if weather %}
+        <div class="weather-box">
+            {% if weather.error %}
+                <p>{{ weather.error }}</p>
+            {% else %}
+                <h2>{{ weather.city }}</h2>
+                <p><strong>Температура:</strong> {{ weather.temperature }} °C</p>
+                <p><strong>Описание:</strong> {{ weather.description }}</p>
+                <p><strong>Местное время:</strong> {{ weather.time }}</p>
+                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Погода">
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if forecast %}
+        <div class="forecast-box">
+            <h3>Прогноз на 5 дней</h3>
+            {% for day in forecast %}
+                <div class="forecast-item">
+                    <p><strong>{{ day.date }}</strong></p>
+                    <img src="http://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="">
+                    <p>{{ day.temperature }} °C</p>
+                    <p>{{ day.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if weather %}
+    <div class="weather-animation">
+        {% if 'дожд' in weather.description.lower() or 'пасмурно' in weather.description.lower() %}
+            {% for i in range(100) %}
+                <div class="raindrop" style="left: {{ i }}vw; animation-duration: {{ (0.5 + (i % 10) * 0.1) }}s;"></div>
+            {% endfor %}
+        {% elif 'снег' in weather.description.lower() %}
+            {% for i in range(80) %}
+                <div class="snowflake" style="left: {{ i }}vw; animation-duration: {{ (2 + (i % 10) * 0.5) }}s;">❄</div>
+            {% endfor %}
+        {% elif 'ясно' in weather.description.lower() %}
+            <div class="sun"></div>
+        {% endif %}
+    </div>
+{% endif %}
+
+</body>
+</html>
