@@ -39,17 +39,18 @@
             {% endfor %}
         </div>
     {% endif %}
-    {% if weather %}
+     {% if weather and not weather.error and weather.description %}
     <div class="weather-animation">
-        {% if 'дожд' in weather.description.lower() or 'пасмурно' in weather.description.lower() %}
+        {% set desc = weather.description.lower() %}
+        {% if 'дожд' in desc or 'пасмурно' in desc %}
             {% for i in range(100) %}
                 <div class="raindrop" style="left: {{ i }}vw; animation-duration: {{ (0.5 + (i % 10) * 0.1) }}s;"></div>
             {% endfor %}
-        {% elif 'снег' in weather.description.lower() %}
+        {% elif 'снег' in desc %}
             {% for i in range(80) %}
                 <div class="snowflake" style="left: {{ i }}vw; animation-duration: {{ (2 + (i % 10) * 0.5) }}s;">❄</div>
             {% endfor %}
-        {% elif 'ясно' in weather.description.lower() %}
+        {% elif 'ясно' in desc %}
             <div class="sun"></div>
         {% endif %}
     </div>
