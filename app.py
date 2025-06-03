@@ -1,10 +1,16 @@
+import os
+from dotenv import load_dotenv
+
+
+
 from flask import Flask, render_template, request
 import requests
 from datetime import datetime, timedelta
 
+load_dotenv()
 app = Flask(__name__)
-API_KEY = 'your api key '  # <-- вставь сюда свой API-ключ
-
+  # <-- вставь сюда свой API-ключ
+API_KEY = os.getenv('API_KEY')
 @app.route('/', methods=['GET', 'POST'])
 def index():
     current_weather = None
